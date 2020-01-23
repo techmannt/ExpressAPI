@@ -1,8 +1,7 @@
 const express = require('express');
 const chirpsRouter = require('./chirps');
+const router = express.Router();
 
-let router = express.Router();
+router.use('/chirps', chirpsRouter);
 
-router.use('/api.chirps', chirpsRouter);
-
-module.exports(router);
+module.exports = router;
