@@ -17,15 +17,9 @@ router.post('/', (req, res) => {
   res.status(200).send('Thanks for creating a chirp!');
 });
 
-router.post('/:id/', (req, res) => {
-  let id = req.params.id;
-  chirpStore.UpdateChirp(id, { username: req.body.username, message: req.body.message }); // Pass in an object to update BOTH the user and the text!
-  res.sendStatus(200);
-});
-
 router.put('/:id/', (req, res) => {
   let id = req.params.id;
-  chirpStore.UpdateChirp(id, { user: req.body.username, text: req.body.message }); // Pass in an object to update BOTH the user and the text!
+  chirpStore.UpdateChirp(id, { username: req.body.username, message: req.body.message }); // Pass in an object to update BOTH the user and the text!
   res.sendStatus(200);
 });
 

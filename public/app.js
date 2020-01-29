@@ -1,32 +1,32 @@
 let deleteChirp = (id) => {
   $.ajax({
     type: 'DELETE',
-    url: `api/chirps/${id}/`
-  });
-
-  $('#chirpList').text('');  // Clear out the chirps.
-  displayChirps();  // Display an updated list of chirps.
+    url: `/api/chirps/${id}/`
+  })
+  .then($('#chirpList').text(''))  // Clear out the chirps.
+  .then(displayChirps());  // Display an updated list of chirps.
 };
 
 let updateChirp = (id) => {
   let newUsername = prompt("Enter a new username");
   let newChirp = prompt("Enter a new chirp");
 
-  $.post(`api/chirps/${id}/`,
-    {
+  $.ajax({
+    type: 'PUT',
+    url: `/api/chirps/${id}/`,
+    data: {
       username: newUsername,
       message: newChirp
     }
-  );
-
-  $('#chirpList').text('');  // Clear out the chirps.
-  displayChirps();  // Display an updated list of chirps.
+  })
+  .then($('#chirpList').text(''))  // Clear out the chirps.
+  .then(displayChirps());  // Display an updated list of chirps.
 };
 
 let displayChirps = () => {
   $.get({
     type: 'GET',
-    url: 'api/chirps/',
+    url: '/api/chirps/',
   }, data => {
 
     for (let key in data) {
@@ -36,17 +36,18 @@ let displayChirps = () => {
   });
 };
 
+displayChirps();
+
 $('#submitchirp').click(() => {
   $.ajax({
     type: 'POST',
-    url: 'api/chirps',
+    url: '/api/chirps',
     data: {
       username: $('#username').val(),
       message: $('#message').val()
     }
-  });
-
-  $('#chirpList').text('');  // Clear out the chirps.
-  displayChirps();  // Display an updated list of chirps.
-
+  })
+  .then(res => console.log(res))
+  .then($('#chirpList').text(''))  // Clear out the chirps.
+  .then(displayChirps());  // Display an updated list of chirps.
 });
